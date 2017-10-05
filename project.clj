@@ -14,4 +14,5 @@
          :init potchat.core/init!}
   :main ^:skip-aot potchat.core
   :target-path "target/%s"
+  :uberjar-name "potchat.jar"
   :profiles {:uberjar {:aot :all}})
