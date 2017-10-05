@@ -1,14 +1,7 @@
 var previousMessages = [];
 
-function onMessagesFetch() {
-    var messages = this.responseText.split("\n");
-    if (messages.count && previousMessages.count && messages[0] === previousMessages[0]) {
-        console.log("messages haven't changed. nothing to do"); // NOCOMMIT
-        previousMessages = messages;
-        return;
-    }
-    previousMessages = messages;
-
+function updateDisplayedMessages(messages) {
+    console.log("updating messages..."); // NOCOMMIT
     console.log("new messages:", messages); // NOCOMMIT
 
     var messagesDiv = document.getElementById('messages');
@@ -22,8 +15,16 @@ function onMessagesFetch() {
     }
 }
 
+function onMessagesFetch() {
+    var messages = this.responseText.split("\n");
+
+    var messagesChanged = messages.length && (!previousMessages.length || (messages[0] !== previousMessages[0]));
+    previousMessages = messages;
+
+    if (messagesChanged) updateDisplayedMessages(messages);
+}
+
 function updateMessages() {
-    console.log("updating messages..."); // NOCOMMIT
     var request = new XMLHttpRequest();
     request.addEventListener("load", onMessagesFetch);
     request.open("GET", "/messages");
