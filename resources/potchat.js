@@ -18,7 +18,9 @@ function updateDisplayedMessages(messages) {
 function onMessagesFetch() {
     var messages = this.responseText.split("\n");
 
-    var messagesChanged = messages.length && (!previousMessages.length || (messages[0] !== previousMessages[0]));
+    var messagesChanged = messages.length && (!previousMessages.length ||
+                                              messages.length !== previousMessages.length ||
+                                              (messages[messages.length - 1] !== previousMessages[previousMessages.length - 1]));
     previousMessages = messages;
 
     if (messagesChanged) updateDisplayedMessages(messages);
