@@ -20,7 +20,7 @@
   (vec
    (cons
     :div#messages
-    (for [message (take 100 @messages)]
+    (for [message (reverse (take 100 @messages))]
       [:p message]))))
 
 (defn- render-new-message-form []
@@ -45,7 +45,7 @@
 (defn- fetch-messages [_]
   {:status  200
    :headers {"Content-Type" "text"}
-   :body    (str/join "\n" (take 100 @messages))})
+   :body    (str/join "\n" (reverse (take 100 @messages)))})
 
 (def ^:private routes
   (compojure/routes
